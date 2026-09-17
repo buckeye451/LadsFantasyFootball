@@ -1,15 +1,10 @@
 /**
  * Site branding — the one place this league's own name lives.
  *
- * ⚠️ PLACEHOLDER VALUES. Everything below is a stand-in until the real league
- * name and logo arrive. Edit this file (and drop the logo at
- * `public/hero/logo.svg`) and the whole site follows — the browser tab, the
- * splash page, the drawer, and the link-preview images.
- *
- * Note these are only *fallbacks* for the chrome. Once a sync has run, the
- * header and drawer prefer the league's real name as it is set in Sleeper, so
- * most of the site self-brands from the league itself. These cover the splash
- * page, metadata, and the moments before any data has loaded.
+ * These are the fallbacks for the site chrome. Once a sync has run, the header
+ * and drawer prefer the league's real name as it is set in Sleeper, so most of
+ * the site self-brands from the league itself. These cover the splash page,
+ * browser-tab metadata, and link-preview images.
  *
  * Kept free of Node-only imports on purpose: client components import it too.
  */

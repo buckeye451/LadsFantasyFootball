@@ -33,19 +33,27 @@ into a local SQLite database automatically, and the site serves:
 This is a sibling of the BMCF League app: same layout, same features, its own
 league, its own database and its own deployment. The two share no data.
 
-## ⚠️ Three things to fill in
+## ⚠️ One thing left to upload
 
-This repo was set up from the BMCF codebase, so a few things are deliberately
-blank or placeheld rather than carrying the other league's values over:
+Manager names and the 2025 title are filled in. The only outstanding item is the
+real logo.
 
-| What | Where | How to fill it |
+| What | Where | How |
 |---|---|---|
-| **League name + logo** | `src/lib/branding.ts`, `public/hero/logo.svg` | Edit the constants; drop the real badge at that path (keep the filename). |
-| **Manager names** | `src/lib/managers.ts` | Sleeper handle → the name you actually call each other. Empty means handles show through as-is. |
-| **Season champions** | `SEASON_CHAMPIONS` in `src/lib/stats.ts` | One line per completed season, keyed by Sleeper handle. Empty means the trophy case shows no titles. |
+| **Logo** | `public/hero/logo.svg` | Upload the badge, keeping the filename. See below. |
 
-Everything else — teams, scores, schedules, rosters, drafts, trades, brackets —
-comes from Sleeper on the first sync and needs no editing.
+Uploading from the browser: open `public/hero/` on this branch → **Add file →
+Upload files** → drag the image in → **Commit changes**. That push redeploys on
+its own. The CSS sizes the logo by width on the splash page and by height in the
+header, so a wide wordmark and a square badge both work without CSS changes.
+
+If your file is a PNG rather than an SVG, upload it as `logo.png` and say so —
+two references in `SiteHeader.tsx` and `page.tsx` need the new extension.
+
+Keep in mind for later: **add the 2026 champion** to `SEASON_CHAMPIONS` in
+`src/lib/stats.ts` once that season finishes, or the trophy case will still show
+only 2025. Everything else — teams, scores, schedules, rosters, drafts, trades,
+brackets — comes from Sleeper on each sync and needs no editing.
 
 ## Quick start
 

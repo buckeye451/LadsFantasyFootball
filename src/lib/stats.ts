@@ -2636,13 +2636,13 @@ export function managerVerdict(leagueId: string, rosterId: number): ManagerVerdi
 /**
  * Season champion by year (Sleeper display name). Single source of truth.
  *
- * ⚠️ EMPTY ON PURPOSE — these are this league's titles and cannot be guessed.
- * Sleeper's bracket is synced, but the trophy case reads this map, so add a
- * line per completed season once you know the winner, keyed by Sleeper handle:
- *   '2025': 'sleeperhandle',
- * With the map empty the trophy case simply renders no titles.
+ * Add a line per completed season, keyed by Sleeper handle — managerName()
+ * resolves it to the name shown everywhere else, so the handle's casing here
+ * does not matter. 2026 is still in progress and gets its line when it ends.
  */
-export const SEASON_CHAMPIONS: Record<string, string> = {};
+export const SEASON_CHAMPIONS: Record<string, string> = {
+  '2025': 'YungFunni',
+};
 
 /** The champion's display name for a season, or null if none recorded. */
 export function championOf(season: string): string | null {
