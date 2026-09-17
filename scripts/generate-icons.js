@@ -24,13 +24,15 @@ const LOGO = 'data:image/svg+xml;base64,' + LOGO_SVG.toString('base64');
 
 // Matches .splash in globals.css — the app's own purple backdrop.
 const PURPLE = 'radial-gradient(125% 125% at 66% 38%, #6a3a9c 0%, #401d67 46%, #1b0930 100%)';
+// The logo's own navy, so the mark keeps its contrast on any browser chrome.
+const NAVY = '#00356a';
 
 /**
- * `fill` scales the badge to the square's height and lets the ends of the
- * swoosh crop off; `fit` keeps the whole logo inside a margin. The logo is
- * 1.5:1, so fitting it into a square leaves a third of the height empty —
- * fine at home-screen size, but at a 16px tab it shrinks the mark to an
- * unreadable sliver.
+ * `fill` scales the logo to the square's height and lets the sides crop off;
+ * `fit` keeps the whole logo inside a margin. The logo is a 2:1 wordmark, so
+ * `fill` would crop away everything but the middle two letters — both icons
+ * therefore use `fit`, and the tab icon gets a navy plate so the white "FANTASY
+ * FOOTBALL" band still reads against a light browser chrome.
  */
 function html({ size, bg, inset, mode }) {
   const img =
@@ -45,8 +47,9 @@ function html({ size, bg, inset, mode }) {
 }
 
 const JOBS = [
-  // Browser tab: transparent, so it sits on light or dark browser chrome.
-  { out: 'src/app/icon.png', size: 512, bg: null, mode: 'fill', omitBackground: true },
+  // Browser tab: navy plate. A transparent 2:1 wordmark loses its white band
+  // against a light tab strip, and `fill` would crop the word in half.
+  { out: 'src/app/icon.png', size: 512, bg: NAVY, mode: 'fit', inset: 26, omitBackground: false },
   // iOS home screen: transparency comes out black there, so the purple is
   // baked in. iOS also rounds the corners, hence the margin.
   {
@@ -60,7 +63,11 @@ const JOBS = [
 ];
 
 (async () => {
-  const browser = await chromium.launch();
+  // CHROMIUM_PATH lets a machine with a preinstalled browser (CI images, some
+  // sandboxes) skip `npx playwright install`. Unset, Playwright picks its own.
+  const browser = await chromium.launch(
+    process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}
+  );
   for (const job of JOBS) {
     const ctx = await browser.newContext({
       viewport: { width: job.size, height: job.size },

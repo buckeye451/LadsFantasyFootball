@@ -16,6 +16,10 @@
   --grid: #40305f;
   --baseline: #55447e;
   --border: rgba(255, 255, 255, 0.1);
+  /* Brand accent: outlines, links, chips, buttons. Distinct from the chart
+     slots below, which exist only to tell teams apart. Dark mode keeps the
+     blue it has always used — navy #00356a is invisible here (1.6:1). */
+  --accent: #3987e5;
   --series-1: #3987e5;
   --series-2: #008300;
   --series-3: #d55181;
@@ -146,6 +150,8 @@
   --grid: #ddd4c0;
   --baseline: #c8bea7;
   --border: rgba(30, 28, 20, 0.14);
+  /* Brand accent, from the league logo's navy. 9.7:1 on the sand page. */
+  --accent: #00356a;
   --series-1: #1e6b42;
   --series-2: #2f6fd0;
   --series-3: #b23a6b;
@@ -154,8 +160,8 @@
   --good: #1e6b42;
   --critical: #b3402f;
   --critical-wash: rgba(179, 64, 47, 0.12);
-  --accent-wash: rgba(30, 107, 66, 0.1);
-  --focus-ring: rgba(30, 107, 66, 0.45);
+  --accent-wash: rgba(0, 53, 106, 0.1);
+  --focus-ring: rgba(0, 53, 106, 0.45);
   --good-wash: rgba(30, 107, 66, 0.13);
   --good-wash-soft: rgba(30, 107, 66, 0.07);
   --good-wash-mid: rgba(30, 107, 66, 0.1);
@@ -176,7 +182,7 @@
   --val-warn-bg: rgba(196, 150, 40, 0.2);
   --val-bad-fg: #a33526;
   --val-bad-bg: rgba(179, 64, 47, 0.14);
-  --recap-tile-bg: #1e6b42;
+  --recap-tile-bg: #00356a;
   --recap-tile-ink: #ffffff;
   --recap-tile-muted: rgba(255, 255, 255, 0.82);
   --recap-tile-border: rgba(255, 255, 255, 0.24);
@@ -193,7 +199,7 @@
   --trophy-tile-ink: #16160f;
   --trophy-tile-muted: #6d6756;
   --progress-empty: #ddd4c0;
-  --progress-fill: #1e6b42;
+  --progress-fill: #00356a;
   --progress-post: #b8860b;
   --box-bench-bg: rgba(30, 28, 20, 0.08);
   --row-stripe: rgba(30, 28, 20, 0.035);
@@ -205,7 +211,7 @@
   --record-label: var(--muted);
   --record-line: var(--muted);
   --record-holder: var(--ink);
-  --record-link: var(--series-1);
+  --record-link: var(--accent);
   --record-modal-bg: var(--surface-opaque);
   --record-divider: var(--grid);
   /* Mention chips: one hue per roster slot, and the five highlighter
@@ -675,7 +681,7 @@ a {
 }
 
 .season-picker select:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -804,7 +810,7 @@ main {
 }
 
 .week-select select:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -1051,8 +1057,8 @@ tr.benched-row td {
 
 .chip.selected {
   color: var(--ink);
-  border-color: var(--chip-color, var(--series-1));
-  background: color-mix(in srgb, var(--chip-color, var(--series-1)) 16%, transparent);
+  border-color: var(--chip-color, var(--accent));
+  background: color-mix(in srgb, var(--chip-color, var(--accent)) 16%, transparent);
 }
 
 .chip-dot {
@@ -1558,7 +1564,7 @@ th.sortable.sorted {
 
 .sort-caret {
   font-size: 9px;
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 /* Lifetime page: trophy case */
@@ -2068,7 +2074,7 @@ tr.playoff-cut td {
 /* Sits inside .recap-date, so it inherits the small muted line and only has
    to differ by colour. */
 .recap-permalink {
-  color: var(--series-1);
+  color: var(--accent);
   font-weight: 700;
   text-decoration: none;
 }
@@ -2448,7 +2454,7 @@ tr.playoff-cut td {
   margin-top: 10px;
   font-size: 12.5px;
   font-weight: 650;
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .pos-more:hover {
@@ -3743,18 +3749,18 @@ tr.playoff-cut td {
 /* The team whose page opened the board */
 .rank-list .is-you {
   background: var(--accent-wash);
-  box-shadow: inset 3px 0 0 var(--series-1);
+  box-shadow: inset 3px 0 0 var(--accent);
 }
 
 .rank-list .is-you .record-holder {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .rank-you {
   margin-left: 6px;
   padding: 1px 5px;
   border-radius: 999px;
-  background: var(--series-1);
+  background: var(--accent);
   color: var(--surface-opaque);
   font-size: 9px;
   font-weight: 700;
@@ -3823,12 +3829,12 @@ tr.playoff-cut td {
 }
 
 .seg-tab.active {
-  background: var(--series-1);
+  background: var(--accent);
   color: #fff;
 }
 
 .seg-tab:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -3916,7 +3922,7 @@ tr.playoff-cut td {
 }
 
 .week-rail-cell.current {
-  background: var(--series-1);
+  background: var(--accent);
   color: #fff;
   font-weight: 700;
 }
@@ -3937,7 +3943,7 @@ tr.playoff-cut td {
 
 .week-rail-cell:focus-visible,
 .week-rail-playoffs:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -4083,7 +4089,7 @@ tr.playoff-cut td {
 }
 
 :root[data-theme='light'] .lead-story {
-  background: linear-gradient(115deg, #1e6b42 0%, #14512f 70%);
+  background: linear-gradient(115deg, #00356a 0%, #002347 70%);
 }
 
 .lead-story-kicker {
@@ -4167,7 +4173,7 @@ tr.playoff-cut td {
 }
 
 .lead-tile-figure.tone-series {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .lead-tile-figure.tone-good {
@@ -4252,7 +4258,7 @@ tr.playoff-cut td {
 }
 
 .hub-row:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -4332,7 +4338,7 @@ tr.playoff-cut td {
   }
 
   .bottom-tab.active {
-    color: var(--series-1);
+    color: var(--accent);
   }
 
   .bottom-tab-icon {
@@ -4341,7 +4347,7 @@ tr.playoff-cut td {
   }
 
   .bottom-tab:focus-visible {
-    outline: 2px solid var(--series-1);
+    outline: 2px solid var(--accent);
     outline-offset: -2px;
     border-radius: 8px;
   }
@@ -4425,7 +4431,7 @@ tr.playoff-cut td {
 }
 
 :root[data-theme='light'] .record-hero {
-  background: linear-gradient(115deg, #1e6b42 0%, #14512f 70%);
+  background: linear-gradient(115deg, #00356a 0%, #002347 70%);
 }
 
 .record-hero-kicker {
@@ -4469,13 +4475,13 @@ tr.playoff-cut td {
 
 .record-chip.active {
   background: var(--accent-wash);
-  box-shadow: inset 0 0 0 1px var(--series-1);
+  box-shadow: inset 0 0 0 1px var(--accent);
   color: var(--ink);
   border-color: transparent;
 }
 
 .record-chip:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -4593,7 +4599,7 @@ tr.playoff-cut td {
 }
 
 .seed-card:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -4604,7 +4610,7 @@ tr.playoff-cut td {
 }
 
 .seed-card.bubble-seed {
-  border-color: var(--series-1);
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-wash);
 }
 
@@ -4630,7 +4636,7 @@ tr.playoff-cut td {
 }
 
 .seed-card.bubble-seed .seed-rank {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .seed-body {
@@ -4651,7 +4657,7 @@ tr.playoff-cut td {
 }
 
 .seed-card.bubble-seed .seed-note {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .seed-right {
@@ -4680,7 +4686,7 @@ tr.playoff-cut td {
 
 .state-must-win .seed-chip,
 .state-in-hunt .seed-chip {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .state-clinched .seed-chip {
@@ -4709,7 +4715,7 @@ tr.playoff-cut td {
 }
 
 .score-card:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -4718,7 +4724,7 @@ tr.playoff-cut td {
 }
 
 .score-card.tone-close {
-  border-color: var(--series-1);
+  border-color: var(--accent);
 }
 
 .score-card-kicker {
@@ -4730,7 +4736,7 @@ tr.playoff-cut td {
 }
 
 .score-card.tone-close .score-card-kicker {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .score-row {
@@ -4795,7 +4801,7 @@ tr.playoff-cut td {
   border: 1px solid var(--baseline);
   border-radius: 9px;
   background: none;
-  color: var(--series-1);
+  color: var(--accent);
   font-family: var(--font-ui);
   font-size: 13px;
   font-weight: 600;
@@ -4855,7 +4861,7 @@ tr.playoff-cut td {
   display: block;
   height: 20px;
   border-radius: 3px;
-  background: var(--series-1);
+  background: var(--accent);
 }
 
 .sorted-bar.lost {
@@ -5059,7 +5065,7 @@ tr.playoff-cut td {
 }
 
 .score-side.won .score-side-bar {
-  background: var(--series-1);
+  background: var(--accent);
 }
 
 .score-side-body {
@@ -5101,7 +5107,7 @@ tr.playoff-cut td {
 
 /* A note that says something notable happened gets the accent. */
 .score-side-note.flagged {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .score-side-score {
@@ -5124,7 +5130,7 @@ tr.playoff-cut td {
   border-top: 1px solid var(--border);
   font-size: 12px;
   font-weight: 600;
-  color: var(--series-1);
+  color: var(--accent);
   cursor: pointer;
   list-style: none;
 }
@@ -5138,7 +5144,7 @@ tr.playoff-cut td {
 }
 
 .score-fold > summary:focus-visible {
-  outline: 2px solid var(--series-1);
+  outline: 2px solid var(--accent);
   outline-offset: -2px;
 }
 
@@ -5192,7 +5198,7 @@ tr.playoff-cut td {
 }
 
 .adv-note-flag {
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 .adv-note-key {
@@ -5447,7 +5453,7 @@ tr.playoff-cut td {
 .card > details.table-view > summary {
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--series-1);
+  color: var(--accent);
 }
 
 @media (max-width: 640px) {
