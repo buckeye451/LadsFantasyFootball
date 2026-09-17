@@ -1,8 +1,9 @@
-# fly.toml — Lads League
+# fly.toml app configuration file generated for ladsfantasyfootball on 2026-09-17T17:54:46Z
 #
-# See https://fly.io/docs/reference/configuration/ for what each block does.
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = 'lads-league'
+app = 'ladsfantasyfootball'
 primary_region = 'ord'
 
 [build]
@@ -12,9 +13,6 @@ primary_region = 'ord'
   AUTO_SYNC_MINUTES = '180'
   DB_PATH = '/data/league.db'
   NODE_ENV = 'production'
-  # Comma-separated Sleeper league ids, one per season (2026, 2025).
-  # The sync also follows each league's previous-season chain automatically, so
-  # a new season appears here on its own once it starts.
   SLEEPER_LEAGUE_ID = '1386530997679443968,1254525039957516288'
 
 [[mounts]]
@@ -26,18 +24,9 @@ primary_region = 'ord'
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
-  # Scale to zero when nobody is on the site, so an idle league costs nothing.
-  # The trade-off: the first visit after a quiet spell waits a few seconds for
-  # the machine to boot, and the background auto-sync only ticks while awake
-  # (any visit triggers a sync anyway). Set this to 1 to keep it always warm.
   min_machines_running = 0
   processes = ['app']
 
 [[vm]]
   size = 'shared-cpu-1x'
-  # Headroom, not a steady-state requirement: the server idles around 110MB,
-  # but a burst of concurrent dynamic renders was measured peaking at 270MB.
-  # Fly OOM-kills silently, and a kill mid-response surfaces as the proxy's
-  # "could not finish reading HTTP body" with the page loading forever, so the
-  # spare room turns a hard failure into a slow one.
   memory = '1gb'
