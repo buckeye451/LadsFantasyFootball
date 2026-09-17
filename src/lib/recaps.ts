@@ -1,0 +1,174 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { getDb, DB_PATH } from './db';
+
+/** Uploads live beside the database so they land on the same Fly volume. */
+export const UPLOAD_DIR = path.join(path.dirname(DB_PATH), 'uploads');
+
+export interface Recap {
+  id: number;
+  season: string;
+  title: string;
+  preheader: string | null;
+  body: string;
+  images: string[];
+  createdAt: string;
+}
+
+function toRecap(r: Record<string, unknown>): Recap {
+  let images: string[] = [];
+  try {
+    images = r.images ? (JSON.parse(r.images as string) as string[]) : [];
+  } catch {
+    images = [];
+  }
+  return {
+    id: r.id as number,
+    season: r.season as string,
+    title: r.title as string,
+    preheader: (r.preheader as string) ?? null,
+    body: r.body as string,
+    images,
+    createdAt: r.created_at as string,
+  };
+}
+
+/** Every post for a season, newest first. */
+export function listRecaps(season: string): Recap[] {
+  const rows = getDb()
+    .prepare('SELECT * FROM recaps WHERE season = ? ORDER BY created_at DESC, id DESC')
+    .all(season) as Array<Record<string, unknown>>;
+  return rows.map(toRecap);
+}
+
+/** The most recent post for a season, for the dashboard preview. */
+export function latestRecap(season: string): Recap | null {
+  const row = getDb()
+    .prepare('SELECT * FROM recaps WHERE season = ? ORDER BY created_at DESC, id DESC LIMIT 1')
+    .get(season) as Record<string, unknown> | undefined;
+  return row ? toRecap(row) : null;
+}
+
+/**
+ * The most recent post across every season, for the header's notification
+ * bell. Deliberately not season-scoped: a new post is news whatever season
+ * you happen to be looking at.
+ */
+export function newestRecap(): Recap | null {
+  const row = getDb()
+    .prepare('SELECT * FROM recaps ORDER BY created_at DESC, id DESC LIMIT 1')
+    .get() as Record<string, unknown> | undefined;
+  return row ? toRecap(row) : null;
+}
+
+export function createRecap(input: {
+  season: string;
+  title: string;
+  preheader?: string | null;
+  body: string;
+  images?: string[];
+}): number {
+  const result = getDb()
+    .prepare(
+      `INSERT INTO recaps (season, title, preheader, body, images, created_at)
+       VALUES (?, ?, ?, ?, ?, ?)`
+    )
+    .run(
+      input.season,
+      input.title,
+      input.preheader?.trim() || null,
+      input.body,
+      JSON.stringify(input.images ?? []),
+      new Date().toISOString()
+    );
+  return Number(result.lastInsertRowid);
+}
+
+export function getRecap(id: number): Recap | null {
+  const row = getDb().prepare('SELECT * FROM recaps WHERE id = ?').get(id) as
+    | Record<string, unknown>
+    | undefined;
+  return row ? toRecap(row) : null;
+}
+
+/** Edit a post in place. `images` replaces the stored list wholesale. */
+export function updateRecap(
+  id: number,
+  input: { title: string; preheader?: string | null; body: string; images: string[] }
+): boolean {
+  const res = getDb()
+    .prepare(
+      `UPDATE recaps SET title = ?, preheader = ?, body = ?, images = ? WHERE id = ?`
+    )
+    .run(input.title, input.preheader?.trim() || null, input.body, JSON.stringify(input.images), id);
+  return res.changes > 0;
+}
+
+export function deleteRecap(id: number): boolean {
+  const existing = getRecap(id);
+  if (!existing) return false;
+  getDb().prepare('DELETE FROM recaps WHERE id = ?').run(id);
+  deleteImages(existing.images);
+  return true;
+}
+
+/** Remove stored uploads that no post references any more. */
+export function deleteImages(names: string[]): void {
+  for (const name of names) {
+    if (!/^[A-Za-z0-9-]+\.(jpg|png|gif|webp|avif)$/.test(name)) continue;
+    try {
+      fs.unlinkSync(path.join(UPLOAD_DIR, name));
+    } catch {
+      // already gone — nothing to clean up
+    }
+  }
+}
+
+const EXT_BY_TYPE: Record<string, string> = {
+  'image/jpeg': '.jpg',
+  'image/png': '.png',
+  'image/gif': '.gif',
+  'image/webp': '.webp',
+  'image/avif': '.avif',
+};
+
+export const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+
+/**
+ * Store an uploaded image and return its generated file name. The name is
+ * random and the extension comes from the content type, so a hostile filename
+ * can't escape the upload directory.
+ */
+export async function saveImage(file: File): Promise<string | null> {
+  const ext = EXT_BY_TYPE[file.type];
+  if (!ext) return null;
+  if (file.size === 0 || file.size > MAX_IMAGE_BYTES) return null;
+  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  const name = `${crypto.randomUUID()}${ext}`;
+  const buf = Buffer.from(await file.arrayBuffer());
+  fs.writeFileSync(path.join(UPLOAD_DIR, name), buf);
+  return name;
+}
+
+const CONTENT_TYPE_BY_EXT: Record<string, string> = {
+  '.jpg': 'image/jpeg',
+  '.png': 'image/png',
+  '.gif': 'image/gif',
+  '.webp': 'image/webp',
+  '.avif': 'image/avif',
+};
+
+/** Read a stored upload by name. Rejects anything that isn't a plain file name. */
+export function readImage(name: string): { body: Buffer; contentType: string } | null {
+  if (!/^[A-Za-z0-9-]+\.(jpg|png|gif|webp|avif)$/.test(name)) return null;
+  const full = path.join(UPLOAD_DIR, name);
+  if (!full.startsWith(UPLOAD_DIR + path.sep)) return null;
+  try {
+    return {
+      body: fs.readFileSync(full),
+      contentType: CONTENT_TYPE_BY_EXT[path.extname(name)] ?? 'application/octet-stream',
+    };
+  } catch {
+    return null;
+  }
+}
