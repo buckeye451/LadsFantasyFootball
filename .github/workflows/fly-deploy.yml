@@ -68,6 +68,20 @@ jobs:
             echo "Volume lads_data already exists in $REGION."
           fi
 
+          # Fly publishes <app>.fly.dev DNS only once the app owns a public IP.
+          # `apps create` + `deploy` does NOT allocate one — only `fly launch`
+          # does — so without this the hostname never resolves and the browser
+          # reports a typo rather than a server error. Shared v4 is free.
+          # Idempotent: later runs see the existing IPs and skip.
+          if [ "$(flyctl ips list --app "$APP" --json 2>/dev/null | jq 'length' 2>/dev/null || echo 0)" -eq 0 ]; then
+            echo "No public IP yet — allocating (this is what publishes DNS)…"
+            flyctl ips allocate-v6 --app "$APP" || true
+            flyctl ips allocate-v4 --shared --app "$APP" || true
+            flyctl ips list --app "$APP"
+          else
+            echo "App already has a public IP."
+          fi
+
           flyctl deploy --remote-only
 
       - name: Show the app URL

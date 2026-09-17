@@ -30,4 +30,4 @@ export const LEAGUE_TAGLINE = 'Fantasy football league dashboard powered by the 
  * Public hostname, shown in the corner of recap preview images and used to
  * resolve absolute og:image URLs. Override with SITE_URL in the environment.
  */
-export const SITE_DOMAIN = 'lads-league.fly.dev';
+export const SITE_DOMAIN = 'ladsfantasyfootball.fly.dev';

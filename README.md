@@ -121,7 +121,7 @@ entrypoint (`scripts/docker-entrypoint.sh`), and a `fly.toml` with this
 league's ids already filled in. Fly is a good fit because the SQLite database
 lives on a persistent **volume** — data survives restarts and deploys.
 
-The app name is `lads-league` and the volume is `lads_data`, both distinct from
+The app name is `ladsfantasyfootball` and the volume is `lads_data`, both distinct from
 the BMCF app's, so the two deployments never touch each other.
 
 ### Option A — deploy from the browser via GitHub Actions (no install needed)
@@ -144,10 +144,10 @@ for you.
 4. **Deploy**: go to the **Actions** tab → **Deploy to Fly.io** → **Run
    workflow** (pick this branch) → **Run**. The run creates the app, creates the
    1 GB database volume, builds the image on Fly's servers, and boots it. When
-   it finishes, the job summary prints your URL (`https://lads-league.fly.dev`).
+   it finishes, the job summary prints your URL (`https://ladsfantasyfootball.fly.dev`).
 
 After that, every push to the deploy branch redeploys automatically, and you
-can re-run it any time from the Actions tab. If the app name `lads-league` is
+can re-run it any time from the Actions tab. If the app name is
 already taken on Fly, edit the `app = ` line in `fly.toml` (the workflow reads
 the name from there), update `SITE_DOMAIN` in `src/lib/branding.ts` to match,
 and re-run.
@@ -160,7 +160,7 @@ curl -L https://fly.io/install.sh | sh
 fly auth signup        # or: fly auth login
 
 # 2. From the repo root, create the app (rename in fly.toml first if taken).
-fly apps create lads-league
+fly apps create ladsfantasyfootball
 
 # 3. Create the 1 GB volume the database lives on (match the region in fly.toml).
 fly volumes create lads_data --size 1 --region ord
