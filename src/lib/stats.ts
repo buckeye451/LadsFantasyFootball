@@ -1386,6 +1386,13 @@ export interface RecordDef {
   label: string;
   /** What the list covers, for the modal's subtitle. Omitted means all-time. */
   scope?: string;
+  /**
+   * Whether topping this list is something to brag about. The book holds both
+   * kinds — the highest single-game score and the lowest one — and they used
+   * to be painted the same celebratory green, which told the reader nothing.
+   * Absent means a record worth having.
+   */
+  unwanted?: boolean;
   entries: RecordEntry[];
 }
 
@@ -1830,9 +1837,9 @@ function allTimeGroups(rows: GatheredRows, depth: number): RecordGroup[] {
       label: 'Season',
       records: [
         { key: 'most-points', label: 'Most points in a season', entries: topBy(e.seasonPointRows, 'desc', depth) },
-        { key: 'fewest-points', label: 'Fewest points in a season', entries: topBy(e.seasonPointRows, 'asc', depth) },
+        { key: 'fewest-points', label: 'Fewest points in a season', unwanted: true, entries: topBy(e.seasonPointRows, 'asc', depth) },
         { key: 'best-record', label: 'Best season record', entries: topBy(e.seasonRecordRows, 'desc', depth) },
-        { key: 'worst-record', label: 'Worst season record', entries: topBy(e.seasonRecordRows, 'asc', depth) },
+        { key: 'worst-record', label: 'Worst season record', unwanted: true, entries: topBy(e.seasonRecordRows, 'asc', depth) },
       ],
     },
     {
@@ -1840,7 +1847,7 @@ function allTimeGroups(rows: GatheredRows, depth: number): RecordGroup[] {
       label: 'Single game',
       records: [
         { key: 'highest-game', label: 'Highest single-game score', entries: topBy(e.gameRows, 'desc', depth) },
-        { key: 'lowest-game', label: 'Lowest single-game score', entries: topBy(e.gameRows, 'asc', depth) },
+        { key: 'lowest-game', label: 'Lowest single-game score', unwanted: true, entries: topBy(e.gameRows, 'asc', depth) },
         {
           key: 'highest-performance',
           label: 'Highest Performance %',
@@ -1849,9 +1856,10 @@ function allTimeGroups(rows: GatheredRows, depth: number): RecordGroup[] {
         {
           key: 'lowest-performance',
           label: 'Lowest Performance %',
+          unwanted: true,
           entries: topBy(e.perfRows, 'asc', depth),
         },
-        { key: 'lowest-manager', label: 'Lowest Manager %', entries: topBy(e.managerRows, 'asc', depth) },
+        { key: 'lowest-manager', label: 'Lowest Manager %', unwanted: true, entries: topBy(e.managerRows, 'asc', depth) },
       ],
     },
     {
@@ -1861,7 +1869,7 @@ function allTimeGroups(rows: GatheredRows, depth: number): RecordGroup[] {
         { key: 'blowout', label: 'Biggest blowout', entries: topBy(e.marginRows, 'desc', depth) },
         { key: 'closest', label: 'Closest game', entries: topBy(e.marginRows, 'asc', depth) },
         { key: 'highest-combined', label: 'Highest combined score', entries: topBy(e.combinedRows, 'desc', depth) },
-        { key: 'lowest-combined', label: 'Lowest combined score', entries: topBy(e.combinedRows, 'asc', depth) },
+        { key: 'lowest-combined', label: 'Lowest combined score', unwanted: true, entries: topBy(e.combinedRows, 'asc', depth) },
         {
           key: 'most-total-points',
           label: 'Most total points in a week',
@@ -1897,10 +1905,10 @@ function seasonGroup(rows: GatheredRows, season: string, depth: number): RecordG
     label: `${season} season`,
     records: [
       { key: 'cur-highest-game', label: 'Highest single-game score', scope, entries: topBy(e.gameRows, 'desc', depth) },
-      { key: 'cur-lowest-game', label: 'Lowest single-game score', scope, entries: topBy(e.gameRows, 'asc', depth) },
+      { key: 'cur-lowest-game', label: 'Lowest single-game score', unwanted: true, scope, entries: topBy(e.gameRows, 'asc', depth) },
       { key: 'cur-highest-performance', label: 'Highest Performance %', scope, entries: topBy(e.perfRows, 'desc', depth) },
-      { key: 'cur-lowest-performance', label: 'Lowest Performance %', scope, entries: topBy(e.perfRows, 'asc', depth) },
-      { key: 'cur-lowest-manager', label: 'Lowest Manager %', scope, entries: topBy(e.managerRows, 'asc', depth) },
+      { key: 'cur-lowest-performance', label: 'Lowest Performance %', unwanted: true, scope, entries: topBy(e.perfRows, 'asc', depth) },
+      { key: 'cur-lowest-manager', label: 'Lowest Manager %', unwanted: true, scope, entries: topBy(e.managerRows, 'asc', depth) },
       { key: 'cur-blowout', label: 'Biggest blowout', scope, entries: topBy(e.marginRows, 'desc', depth) },
       { key: 'cur-closest', label: 'Closest game', scope, entries: topBy(e.marginRows, 'asc', depth) },
       {

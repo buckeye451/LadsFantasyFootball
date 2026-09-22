@@ -6,6 +6,7 @@ import type { LifetimeRow } from '@/lib/stats';
 import { managerClass, performanceClass, winRateClass } from '@/lib/thresholds';
 import { useStickyColumns } from '@/components/useStickyColumns';
 import { useCompactFull } from '@/components/SegTabs';
+import { Icon } from '@/components/Icon';
 
 /**
  * Only the manager name is pinned here — unlike the season standings there's
@@ -121,7 +122,7 @@ export function LifetimeStandingsTable({ rows }: { rows: LifetimeRow[] }) {
           <thead>
             <tr>
               {th('manager', 'Manager', { sticky: true })}
-              {th('trophies', '🏆', { center: true })}
+              {th('trophies', 'Titles', { center: true })}
               {!compact && th('seasons', 'Seasons', { num: true })}
               {th('record', 'Record')}
               {th('winPct', 'Win %', { num: true })}
@@ -155,7 +156,18 @@ export function LifetimeStandingsTable({ rows }: { rows: LifetimeRow[] }) {
                 <td className={`team-cell ${stickyCell}`}>
                   <Link href={`/team/${r.slug}`}>{r.displayName}</Link>
                 </td>
-                <td className="center">{r.trophies > 0 ? '🏆'.repeat(r.trophies) : ''}</td>
+                <td className="center">
+                  {r.trophies > 0 && (
+                    <span
+                      className="title-trophies"
+                      aria-label={`${r.trophies} title${r.trophies === 1 ? '' : 's'}`}
+                    >
+                      {Array.from({ length: r.trophies }, (_, i) => (
+                        <Icon key={i} name="trophy" size={14} />
+                      ))}
+                    </span>
+                  )}
+                </td>
                 {!compact && <td className="num">{r.seasons}</td>}
                 <td>
                   {r.wins}-{r.losses}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Icon } from '@/components/Icon';
 
 export type Theme = 'light' | 'dark';
 
@@ -55,7 +56,7 @@ export function ThemeToggle() {
     >
       {/* Render nothing until mounted so the icon can't contradict the theme
           the pre-paint script already applied. */}
-      <span aria-hidden="true">{mounted ? (theme === 'dark' ? '☀️' : '🌙') : ''}</span>
+      {mounted && <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={17} />}
     </button>
   );
 }

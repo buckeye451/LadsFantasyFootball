@@ -1,99 +1,97 @@
-/* Lads League — committed dark theme.
-   Palette: validated dark-mode steps (categorical slots 1–4 used for chart
-   selection; status good/critical reserved for W/L and bench warnings). */
+/* Lads League — one palette, two themes.
+   Dark is a neutral near-black ground with the league's navy as the brand
+   surface; light is the sand/navy pair. Categorical slots 1–4 are for chart
+   selection only; good/critical stay reserved for W/L and bench warnings. */
 :root {
   color-scheme: dark;
-  --page: #0c0912;
-  /* Translucent "atomic purple" surfaces for cards / tables / tiles. */
-  --surface: rgba(99, 60, 160, 0.46);
-  --surface-2: rgba(126, 86, 192, 0.46);
-  /* Opaque variant for the sticky header + slide-out drawer (so scrolling
-     content and the page don't bleed through them). */
-  --surface-opaque: #17102a;
-  --ink: #ffffff;
-  --ink-2: #c3c2b7;
-  --muted: #a79bc4;
-  --grid: #40305f;
-  --baseline: #55447e;
+  --page: #0e1116;
+  /* Opaque card surfaces — one ladder shared with light mode, so no page
+     invents a scheme of its own. */
+  --surface: #171c24;
+  --surface-2: #1e242e;
+  /* Slightly lifted variant for the sticky header + slide-out drawer. */
+  --surface-opaque: #131820;
+  --ink: #f4f1ea;
+  --ink-2: #c3c0b8;
+  --muted: #9aa3b0;
+  --grid: #2a313c;
+  --baseline: #3a4350;
   --border: rgba(255, 255, 255, 0.1);
-  /* Brand accent: outlines, links, chips, buttons. Distinct from the chart
-     slots below, which exist only to tell teams apart. Dark mode keeps the
-     blue it has always used — navy #00356a is invisible here (1.6:1). */
-  --accent: #3987e5;
-  --series-1: #3987e5;
-  --series-2: #008300;
-  --series-3: #d55181;
-  --series-4: #c98500;
-  --context-line: #3f3f3b;
-  --good: #0ca30c;
-  --critical: #d03b3b;
-  --critical-wash: rgba(208, 59, 59, 0.14);
-  --accent-wash: rgba(57, 135, 229, 0.12);
+  /* Brand accent: outlines, links, chips, buttons. The logo's navy is
+     invisible on this ground (1.6:1), so dark lifts it to a readable blue. */
+  --accent: #6fb0f0;
+  --series-1: #6fb0f0;
+  --series-2: #4ecb79;
+  --series-3: #e58bb0;
+  --series-4: #e7b84b;
+  --context-line: #3a4350;
+  --good: #4ecb79;
+  --critical: #ff7b7b;
+  --critical-wash: rgba(255, 123, 123, 0.14);
+  --accent-wash: rgba(111, 176, 240, 0.12);
   /* Semantic extras, so light mode is a single block of overrides. */
-  --focus-ring: rgba(57, 135, 229, 0.45);
-  --good-wash: rgba(12, 163, 12, 0.14);
-  --good-wash-soft: rgba(12, 163, 12, 0.08);
-  --good-wash-mid: rgba(12, 163, 12, 0.12);
-  --backdrop: rgba(0, 0, 0, 0.55);
-  --sunken: rgba(0, 0, 0, 0.18);
-  --champ-wash: rgba(246, 201, 69, 0.1);
-  --headshot-bg: rgba(23, 16, 42, 0.9);
-  --pos-qb: #6b8cff;
-  --pos-rb: #f5d34e;
-  --pos-wr: #74e6a8;
-  --pos-te: #8fd3ff;
-  --arrow-up: #48d17a;
-  --arrow-warn: #f5a04e;
-  --arrow-down: #ff6b6b;
+  --focus-ring: rgba(111, 176, 240, 0.5);
+  --good-wash: rgba(78, 203, 121, 0.14);
+  --good-wash-soft: rgba(78, 203, 121, 0.08);
+  --good-wash-mid: rgba(78, 203, 121, 0.11);
+  --backdrop: rgba(4, 6, 10, 0.66);
+  --sunken: rgba(0, 0, 0, 0.24);
+  --champ-wash: rgba(231, 184, 75, 0.12);
+  --headshot-bg: rgba(30, 36, 46, 0.9);
+  --pos-qb: #7e89f0;
+  --pos-rb: #e0c45c;
+  --pos-wr: #6fd9a0;
+  --pos-te: #7ccdf0;
+  --arrow-up: #4ecb79;
+  --arrow-warn: #ffa95e;
+  --arrow-down: #ff7b7b;
   --val-good-fg: #6ff0a4;
-  --val-good-bg: rgba(72, 209, 122, 0.16);
+  --val-good-bg: rgba(78, 203, 121, 0.16);
   --val-warn-fg: #ffb877;
-  --val-warn-bg: rgba(245, 160, 78, 0.16);
+  --val-warn-bg: rgba(255, 169, 94, 0.16);
   --val-bad-fg: #ff8f8f;
-  --val-bad-bg: rgba(255, 107, 107, 0.16);
-  /* Latest-recap tile: inverted against the page so it stands out. */
-  --recap-tile-bg: #ffffff;
-  --recap-tile-ink: #4a2a86;
-  --recap-tile-muted: #6f52ad;
-  --recap-tile-border: rgba(74, 42, 134, 0.25);
-  /* Unread dot on the recap tile. The flash steps between two opaque reds
-     rather than fading out, because the tile is white here and green in light
-     mode — a half-transparent red over the green reads as brown. */
-  --alert-dot: #e6352b;
-  --alert-dot-dim: #f5938c;
+  --val-bad-bg: rgba(255, 123, 123, 0.16);
+  /* Latest-recap tile: the brand navy, the same treatment as light mode. */
+  --recap-tile-bg: #123055;
+  --recap-tile-ink: #ffffff;
+  --recap-tile-muted: rgba(255, 255, 255, 0.78);
+  --recap-tile-border: rgba(255, 255, 255, 0.2);
+  /* Unread dot on the recap tile. The flash steps between two opaque tones
+     rather than fading out, so it never composites to mud over the navy. */
+  --alert-dot: #e8613c;
+  --alert-dot-dim: #f2a08c;
   /* Records-this-week borders: gold for an all-time placing, green for a
-     season one. Tuned against the record book's near-black tile. */
-  --wr-gold: #f6c945;
-  --wr-gold-glow: rgba(246, 201, 69, 0.22);
-  --wr-gold-wash: rgba(246, 201, 69, 0.14);
-  --wr-green: #58c97c;
-  --wr-green-glow: rgba(88, 201, 124, 0.2);
-  --wr-green-wash: rgba(88, 201, 124, 0.14);
-  --trophy-tile-ink: #4a2a86;
-  --trophy-tile-muted: #6f52ad;
+     season one. */
+  --wr-gold: #e7b84b;
+  --wr-gold-glow: rgba(231, 184, 75, 0.2);
+  --wr-gold-wash: rgba(231, 184, 75, 0.12);
+  --wr-green: #4ecb79;
+  --wr-green-glow: rgba(78, 203, 121, 0.18);
+  --wr-green-wash: rgba(78, 203, 121, 0.12);
+  --trophy-tile-ink: #f4f1ea;
+  --trophy-tile-muted: #9aa3b0;
   /* Season progress bar: empty dash, regular-season fill, postseason fill. */
-  --progress-empty: rgba(255, 255, 255, 0.13);
-  --progress-fill: #3987e5;
-  --progress-post: #f6c945;
+  --progress-empty: rgba(255, 255, 255, 0.12);
+  --progress-fill: #6fb0f0;
+  --progress-post: #e7b84b;
   /* Recessed shade behind the bench rows of a box score. */
-  --box-bench-bg: rgba(0, 0, 0, 0.2);
+  --box-bench-bg: rgba(0, 0, 0, 0.22);
   /* Zebra striping on the long tables. */
-  --row-stripe: rgba(255, 255, 255, 0.045);
-  /* --surface is translucent in dark mode; this is the colour it composites to
-     over the page, for frozen cells that have to be genuinely opaque. */
-  --card-solid: #342053;
-  /* Record book runs a neutral near-black scheme of its own in dark mode
-     rather than the purple surfaces, with mint figures. Light mode maps these
-     straight back to the shared tokens. */
-  --record-bg: #141614;
-  --record-border: rgba(255, 255, 255, 0.1);
-  --record-value: #58c97c;
-  --record-label: #93999a;
-  --record-line: #868d8e;
-  --record-holder: #edefee;
-  --record-link: #4fbf72;
-  --record-modal-bg: #16181a;
-  --record-divider: rgba(255, 255, 255, 0.09);
+  --row-stripe: rgba(255, 255, 255, 0.035);
+  /* Frozen table cells need a genuinely opaque fill; --surface is already
+     opaque in both themes, so this just mirrors it. */
+  --card-solid: #171c24;
+  /* The record book used to run a near-black-and-mint scheme of its own.
+     Both themes now map these straight back to the shared tokens. */
+  --record-bg: var(--surface);
+  --record-border: var(--border);
+  --record-value: var(--good);
+  --record-label: var(--muted);
+  --record-line: var(--muted);
+  --record-holder: var(--ink);
+  --record-link: var(--accent);
+  --record-modal-bg: var(--surface-opaque);
+  --record-divider: var(--grid);
   /* Mention chips: one hue per roster slot, and the five highlighter
      colours. Highlights keep dark ink on a bright band in both themes,
      the way a real highlighter reads. */
@@ -322,78 +320,147 @@ a {
   text-decoration: none;
 }
 
-/* ---------- welcome splash ---------- */
-.splash {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  overflow: hidden;
-  background: radial-gradient(125% 125% at 66% 38%, #6a3a9c 0%, #401d67 46%, #1b0930 100%);
+/* ---------- front door ------------------------------------------------------
+   The home page used to be a fixed, full-screen splash with a CLICK TO ENTER
+   button over it. The player art and the badge survive as a band at the top of
+   a page that actually carries this week's results underneath. */
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.splash-players {
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(115deg, #123055 0%, #0a1c31 70%);
+  color: #fff;
+}
+
+:root[data-theme='light'] .home-hero {
+  background: linear-gradient(115deg, #00356a 0%, #002347 70%);
+}
+
+.home-hero-players {
   position: absolute;
-  left: 0;
-  bottom: -2vh; /* let the players bleed slightly off the bottom edge */
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  top: 0;
   display: flex;
   align-items: flex-end;
   pointer-events: none;
+  /* The art is the backdrop; the copy has to stay the loudest thing here. */
+  opacity: 0.92;
 }
 
-.splash-player {
-  height: var(--h, 70vh);
+.home-hero-player {
+  height: var(--h, 90%);
   width: auto;
   margin-left: calc(var(--overlap, 0vw) * -1);
   filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.45));
-  animation: splashInLeft 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.splash-right {
-  position: absolute;
-  right: 4vw;
-  top: 50%;
-  transform: translateY(-50%);
+.home-hero-copy {
+  position: relative;
   z-index: 10;
+  max-width: 620px;
+  padding: 34px 32px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.home-hero-kicker {
+  display: flex;
   align-items: center;
-  gap: 34px;
-  text-align: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.82);
 }
 
-.splash-logo {
-  width: min(38vw, 440px);
-  height: auto;
-  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
-  animation: splashInRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 0.45s;
-}
-
-.splash-cta {
-  display: inline-block;
-  padding: 16px 44px;
+.home-hero-live {
+  padding: 3px 9px;
   border-radius: 999px;
-  background: #f6f4ef;
-  color: #2a0d3a;
-  font-size: clamp(16px, 2.2vw, 24px);
-  font-weight: 800;
-  letter-spacing: 2px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  animation: splashFadeUp 0.7s ease both;
-  animation-delay: 1s;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: #c8102e;
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 
-.splash-cta:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+.home-hero-logo {
+  width: min(42vw, 260px);
+  height: auto;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
 }
 
-@keyframes splashInLeft {
+.home-hero-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.home-hero-blurb {
+  margin: 0;
+  max-width: 460px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.home-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #fff;
+  color: #00356a;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home-cta:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.home-cta.ghost {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.home-cta.ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.home-cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@keyframes heroIn {
   from {
     opacity: 0;
-    transform: translateX(-140px);
+    transform: translateX(26px);
   }
   to {
     opacity: 1;
@@ -401,57 +468,200 @@ a {
   }
 }
 
-@keyframes splashInRight {
-  from {
-    opacity: 0;
-    transform: translateX(120px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+.home-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.home-card {
+  margin: 0;
+}
+
+.home-scores,
+.home-seeds {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.home-score {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--grid);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-score-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.home-score-name.lose {
+  text-align: right;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.home-score-pts {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.home-score-pts.lose {
+  color: var(--muted);
+}
+
+.home-score-dash {
+  color: var(--baseline);
+}
+
+.home-note {
+  margin-top: 10px;
+}
+
+.home-seed {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--grid);
+  color: inherit;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-seed:hover .home-seed-name {
+  color: var(--accent);
+}
+
+.home-seed-rank {
+  width: 20px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.home-seed-rank.in {
+  color: var(--wr-gold);
+}
+
+.home-seed-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.home-seed-rec {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.home-seed-pf {
+  width: 54px;
+  text-align: right;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.home-cut {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0 4px;
+  border-top: 2px solid var(--accent);
+  color: var(--accent);
+}
+
+.home-cut-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.home-recap {
+  display: flex;
+  flex-direction: column;
+  background: var(--recap-tile-bg);
+  color: var(--recap-tile-ink);
+  border-color: var(--recap-tile-border);
+}
+
+.home-recap .kicker {
+  color: var(--recap-tile-muted);
+}
+
+.home-recap-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-recap-title {
+  margin: 8px 0 0;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.home-recap-sub {
+  margin: 6px 0 0;
+  color: var(--recap-tile-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.home-recap-cta {
+  margin-top: auto;
+  padding-top: 14px;
+  color: var(--recap-tile-ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home-recap-cta:hover {
+  text-decoration: underline;
+}
+
+.home-seasons {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 1000px) {
+  .home-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-@keyframes splashFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(26px);
+@media (max-width: 720px) {
+  .home-hero {
+    min-height: 0;
   }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
 
-@media (max-width: 780px) {
-  .splash-right {
-    right: 0;
-    left: 0;
-    top: 7vh;
-    transform: none;
-    margin: 0 auto;
-    z-index: 5;
+  .home-hero-players {
+    opacity: 0.3;
   }
-  .splash-logo {
-    width: min(66vw, 320px);
+
+  .home-hero-copy {
+    padding: 22px 18px;
+    max-width: none;
   }
-  .splash-players {
-    left: 0;
-    right: 0;
-    justify-content: center;
-    height: 60vh;
-  }
-  .splash-player {
-    height: calc(var(--h, 70vh) * 0.62);
-    /* overlap much harder on mobile so the players stack into a tight cluster */
-    margin-left: calc(var(--overlap, 0vw) * -2.3);
+
+  .home-hero-logo {
+    width: 180px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .splash-player,
-  .splash-logo,
-  .splash-cta {
+  .home-hero-player {
     animation: none;
   }
 }
@@ -4084,7 +4294,7 @@ tr.playoff-cut td {
   /* Literal stops rather than token references: the tokens these were sampled
      from invert between themes, so referencing them would paint the dark
      gradient white in light mode. Each theme names its own pair instead. */
-  background: linear-gradient(115deg, #4a2a86 0%, #17102a 62%);
+  background: linear-gradient(115deg, #123055 0%, #0a1c31 70%);
   color: #fff;
 }
 
@@ -4426,7 +4636,7 @@ tr.playoff-cut td {
   margin-bottom: 18px;
   /* Same literal-stop reasoning as .lead-story: the sampled tokens invert
      between themes, so each theme names its own pair. */
-  background: linear-gradient(115deg, #4a2a86 0%, #17102a 62%);
+  background: linear-gradient(115deg, #123055 0%, #0a1c31 70%);
   color: #fff;
 }
 
@@ -6115,4 +6325,256 @@ tr.playoff-cut td {
 
 .wr-key-season {
   color: var(--wr-green);
+}
+
+/* ---- the icon set ---------------------------------------------------------
+   Every icon is an inline SVG drawn with `currentColor`, so it takes the
+   colour of the text it sits with. The rules below only handle placement:
+   the containers that used to hold an emoji were sized by `font-size`, which
+   does nothing to an SVG, so each one gets a real box instead. */
+
+.hub-row-icon,
+.bottom-tab-icon,
+.finish-medal,
+.trophy-emojis,
+.champ-trophy,
+.seed-trophy,
+.benched-tag,
+.kicker-icon,
+.lead-tile-icon,
+.title-trophies {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+/* Icons beside a label sit on the cap height, not the baseline. */
+.kicker-icon {
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+
+.feature-tile-label,
+.hub-row-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* The three dashboard tiles: a tinted square, tinted to match the figure. */
+.lead-tile-icon {
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--accent-wash);
+  color: var(--accent);
+}
+
+.lead-tile-icon.tone-good {
+  background: var(--good-wash);
+  color: var(--good);
+}
+
+.lead-tile-icon.tone-ink {
+  background: var(--sunken);
+  color: var(--ink-2);
+}
+
+/* Trophies are a count, so they line up in a row rather than stacking. */
+.trophy-emojis,
+.title-trophies {
+  gap: 2px;
+  color: var(--wr-gold);
+}
+
+.champ-trophy,
+.seed-trophy {
+  margin-left: 6px;
+  vertical-align: -2px;
+  color: var(--wr-gold);
+}
+
+.benched-tag {
+  color: var(--critical);
+}
+
+/* Podium: gold, silver, bronze, and a wooden spoon for last. */
+.finish-medal {
+  justify-content: center;
+  color: var(--wr-gold);
+}
+
+.finish-tile:nth-child(2) .finish-medal {
+  color: var(--muted);
+}
+
+.finish-tile:nth-child(3) .finish-medal {
+  color: var(--arrow-warn);
+}
+
+.finish-tile.loser .finish-medal {
+  color: var(--muted);
+}
+
+/* ---- desktop top-level nav ------------------------------------------------
+   Sits between the badge and the season control. The hamburger stays: the
+   drawer is still where every week and every manager lives, and it is the
+   whole navigation on a phone, where this is hidden. */
+.header-nav {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: 6px;
+  }
+
+  .header-nav-link {
+    padding: 7px 13px;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header-nav-link:hover {
+    color: var(--ink);
+    background: var(--sunken);
+  }
+
+  .header-nav-link.active {
+    color: var(--accent);
+    background: var(--accent-wash);
+  }
+
+  .header-nav-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ---- dashboard lead: the story, then the panel that explains it -----------
+   The four rates that used to sit inside the navy card as Perf / Manager /
+   ROL % now live here with sentences for labels. The three week tiles move
+   out to a row of their own underneath, so all of it stays on the page. */
+.got-there {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.got-there-title {
+  margin: 0;
+  color: var(--muted);
+}
+
+.got-there-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.got-there-row + .got-there-row {
+  padding-top: 12px;
+  border-top: 1px solid var(--grid);
+}
+
+.got-there-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.got-there-label {
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.got-there-value {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.got-there-detail {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+/* The three week tiles, now a row under the lead rather than a column beside it. */
+.dash-lead-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 860px) {
+  .dash-lead-tiles {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- section heads that carry one link for the whole group ---------------- */
+.section-head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-head-link {
+  flex: none;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+/* Records-this-week cards share a baseline instead of running ragged, and the
+   placing badge sits at the bottom of each rather than wherever the copy ends. */
+.record-grid .wr-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-grid .wr-card .wr-rank {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+/* ---- the two season charts, side by side where there is room -------------- */
+@media (min-width: 1100px) {
+  .charts-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+  }
+}
+
+/* Records nobody wants to hold read differently from records people brag
+   about. Before this, the lowest single-game score was painted in the same
+   celebratory green as the highest, so the colour carried no meaning. */
+.record-card.record-unwanted {
+  background: var(--surface-2);
+}
+
+.record-card.record-unwanted .record-card-value {
+  color: var(--critical);
 }

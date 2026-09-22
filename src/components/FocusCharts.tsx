@@ -339,6 +339,7 @@ export function LeagueChartsBoard({
         </div>
       </div>
 
+      <div className="charts-row">
       <section className="card">
         <h2 className="card-title">Weekly scores</h2>
         <p className="card-note">Points scored by each team, week by week.</p>
@@ -352,6 +353,7 @@ export function LeagueChartsBoard({
         <TeamsLineChart data={rankData} teams={teams} selection={selection} reversed />
         <DataTable data={rankData} teams={teams} prefix="#" />
       </section>
+      </div>
     </>
   );
 }

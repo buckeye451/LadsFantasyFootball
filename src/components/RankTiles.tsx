@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Icon, type IconName } from '@/components/Icon';
 
 export interface RankBoardEntry {
   /** Stable identity for the row — a roster id within a season, a manager
@@ -17,6 +18,8 @@ export interface RankBoardEntry {
 export interface RankTile {
   key: string;
   label: string;
+  /** Sits before the label, in the label's colour. */
+  icon?: IconName;
   /** Already formatted — a rank like "#7", or a name. */
   headline: string;
   /** Render the headline at display size, for a tile led by a rank. */
@@ -64,7 +67,7 @@ function RankModal({
             <p className="record-modal-sub">{tile.note}</p>
           </div>
           <button className="modal-close" onClick={onClose} aria-label="Close">
-            ✕
+            <Icon name="close" size={16} />
           </button>
         </div>
         <ol className="record-list rank-list">
@@ -111,7 +114,10 @@ export function RankTiles({
       <div className={`feature-tiles ${className}`}>
         {tiles.map((t) => (
           <div className="feature-tile" key={t.key}>
-            <div className="feature-tile-label">{t.label}</div>
+            <div className="feature-tile-label">
+              {t.icon && <Icon name={t.icon} size={16} />}
+              {t.label}
+            </div>
             <div className={`feature-tile-name${t.big ? ' rank-figure' : ''}`}>{t.headline}</div>
             {t.lines.map((line, i) => (
               <div className="feature-tile-value" key={i}>

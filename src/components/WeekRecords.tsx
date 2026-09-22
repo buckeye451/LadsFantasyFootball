@@ -17,7 +17,15 @@ export function WeekRecords({
 }) {
   return (
     <section>
-      <h2 className="card-title">Records this week</h2>
+      <div className="section-head-row">
+        <h2 className="card-title">Records this week</h2>
+        {hits.length > 0 && (
+          <Link className="section-head-link" href="/records">
+            Open the record book
+            <span aria-hidden="true"> →</span>
+          </Link>
+        )}
+      </div>
       <p className="card-note">
         Week {week} entries that sit in an all-time top ten{' '}
         <span className="wr-key wr-key-alltime">gold</span> or in {season}&rsquo;s top three{' '}
@@ -39,10 +47,6 @@ export function WeekRecords({
                 </div>
               ))}
               <div className={`wr-rank wr-rank-${h.scope}`}>{h.rankLabel}</div>
-              <Link className="record-more wr-more" href="/records">
-                The Record Book
-                <span aria-hidden="true"> →</span>
-              </Link>
             </div>
           ))}
         </div>

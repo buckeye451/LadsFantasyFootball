@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { RecordDef, RecordGroup } from '@/lib/stats';
+import { Icon } from '@/components/Icon';
 
 function Top25Modal({ record, onClose }: { record: RecordDef; onClose: () => void }) {
   useEffect(() => {
@@ -33,7 +34,7 @@ function Top25Modal({ record, onClose }: { record: RecordDef; onClose: () => voi
           </p>
           </div>
           <button className="modal-close" onClick={onClose} aria-label="Close">
-            ✕
+            <Icon name="close" size={16} />
           </button>
         </div>
         <ol className="record-list">
@@ -112,7 +113,7 @@ export function RecordBook({ groups }: { groups: RecordGroup[] }) {
             {g.records.map((r) => {
               const top = r.entries[0];
               return (
-                <div className="record-card" key={r.key}>
+                <div className={`record-card${r.unwanted ? ' record-unwanted' : ''}`} key={r.key}>
                   <div className="record-card-label">{r.label}</div>
                   <div className="record-card-value">{top.display}</div>
                   <div className="record-card-holder">{top.holder}</div>

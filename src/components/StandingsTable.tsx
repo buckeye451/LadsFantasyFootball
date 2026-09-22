@@ -8,6 +8,7 @@ import { managerClass, performanceClass } from '@/lib/thresholds';
 import { useStickyColumns } from '@/components/useStickyColumns';
 import { useCompactFull } from '@/components/SegTabs';
 import { StandingsCompact } from '@/components/StandingsCompact';
+import { Icon } from '@/components/Icon';
 
 /** Teams that make the playoffs — the red line sits under this place. */
 const PLAYOFF_SPOTS = 6;
@@ -205,7 +206,7 @@ export function StandingsTable({
                 .join(' ');
               const trophy = isChamp && (
                 <span className="champ-trophy" title={`${season ?? ''} champion`.trim()}>
-                  🏆
+                  <Icon name="trophy" size={14} />
                 </span>
               );
               return (

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import type { DraftBoard, DraftPick, LifetimeDrafts } from '@/lib/stats';
 import { SegTabs } from '@/components/SegTabs';
 import { NflTeam } from '@/components/NflTeam';
+import { Icon, type IconName } from '@/components/Icon';
 
 type Scope = 'season' | 'all';
 type Mode = 'compact' | 'full';
@@ -224,7 +225,7 @@ export function DraftsView({
       <div className="draft-rows">
         <HubToggle
           id="by-manager"
-          icon="👤"
+          icon="user"
           title="By manager"
           sub="One manager's draft, in order"
           open={!!open['by-manager']}
@@ -263,7 +264,7 @@ export function DraftsView({
 
         <HubToggle
           id="all-picks"
-          icon="📋"
+          icon="clipboard"
           title="Every pick, in order"
           sub={`${board.picks.length} picks`}
           open={!!open['all-picks']}
@@ -408,7 +409,7 @@ function HubToggle({
   children,
 }: {
   id: string;
-  icon: string;
+  icon: IconName;
   title: string;
   sub: string;
   open: boolean;
@@ -424,8 +425,8 @@ function HubToggle({
         aria-expanded={open}
         aria-controls={`panel-${id}`}
       >
-        <span className="hub-row-icon" aria-hidden="true">
-          {icon}
+        <span className="hub-row-icon">
+          <Icon name={icon} size={20} />
         </span>
         <span className="hub-row-body">
           <span className="hub-row-title">{title}</span>

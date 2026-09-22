@@ -19,6 +19,7 @@ import { PageNav } from '@/components/PageNav';
 import { CarriedByCard, CaseCards, SeasonStrip, VerdictBanner } from '@/components/ManagerVerdict';
 import { HeadToHead } from '@/components/HeadToHead';
 import { WeeklyResultsTable } from '@/components/WeeklyResultsTable';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -116,7 +117,10 @@ export default function TeamPage({
         <div className="feature-tiles matchup-tiles">
           {best && (
             <div className="feature-tile">
-              <div className="feature-tile-label">😎 Owns</div>
+              <div className="feature-tile-label">
+              <Icon name="trend-up" size={16} />
+              Owns
+            </div>
               <div className="feature-tile-name">{best.opponent.displayName}</div>
               <div className="feature-tile-value">
                 {seriesLine(best.opponent)} · {diffLine(best.differential)} a meeting
@@ -125,7 +129,10 @@ export default function TeamPage({
           )}
           {worst && (
             <div className="feature-tile">
-              <div className="feature-tile-label">😤 Owned by</div>
+              <div className="feature-tile-label">
+              <Icon name="trend-down" size={16} />
+              Owned by
+            </div>
               <div className="feature-tile-name">{worst.opponent.displayName}</div>
               <div className="feature-tile-value">
                 {seriesLine(worst.opponent)} · {diffLine(worst.differential)} a meeting

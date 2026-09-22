@@ -26,6 +26,7 @@ import { StandingsTable } from '@/components/StandingsTable';
 import { SeasonProgressTile } from '@/components/SeasonProgress';
 import { WeekRail } from '@/components/WeekRail';
 import { LeadStory, LeadTile } from '@/components/LeadStory';
+import { HowTheyGotThere } from '@/components/HowTheyGotThere';
 import { RecapDot } from '@/components/RecapDot';
 import { isRecapFresh } from '@/lib/recency';
 import { WeekRecords } from '@/components/WeekRecords';
@@ -121,6 +122,12 @@ export default function DashboardPage({
   // the rest of the page — so the lead story's claim can't outrun the standings
   // the reader is looking at.
   const seasonHigh = standings.reduce((max, s) => Math.max(max, s.highScore), 0);
+  // "Win % vs league" as a count of rosters rather than a percentage of nine —
+  // "9 of 9" reads faster than "100%" and can't be mistaken for a win rate.
+  const beatenRosters =
+    highestScoring != null
+      ? Math.round((highestScoring.winPctVsLeague / 100) * Math.max(standings.length - 1, 0))
+      : 0;
   const isSeasonHigh = highestScoring != null && highestScoring.score >= seasonHigh - 0.005;
 
   // The rail shows the league's whole declared regular season, not just the
@@ -150,7 +157,8 @@ export default function DashboardPage({
       <div className="dash-lead">
         {highestScoring ? (
           <LeadStory
-            kicker={`👑 Week ${selectedWeek} · high score of the ${isSeasonHigh ? 'season' : 'week'}`}
+            kickerIcon="crown"
+            kicker={`Week ${selectedWeek} · high score of the ${isSeasonHigh ? 'season' : 'week'}`}
             figure={highestScoring.score.toFixed(1)}
             headline={`${highestScoring.team.displayName} posts this week's high score: ${highestScoring.score.toFixed(1)}`}
             blurb={
@@ -158,26 +166,6 @@ export default function DashboardPage({
                 ? `Nobody has posted a bigger week in ${season}.`
                 : `Week ${selectedWeek}'s best score — ${(seasonHigh - highestScoring.score).toFixed(1)} off the season high.`
             }
-            stats={[
-              {
-                label: 'Perf',
-                value:
-                  highestScoring.performancePct != null
-                    ? `${highestScoring.performancePct.toFixed(1)}%`
-                    : '—',
-                tone: performanceClass(highestScoring.performancePct),
-              },
-              {
-                label: 'Manager',
-                value: `${highestScoring.managerScorePct.toFixed(1)}%`,
-                tone: managerClass(highestScoring.managerScorePct),
-              },
-              {
-                label: 'Left on bench',
-                value: (highestScoring.optimal - highestScoring.score).toFixed(1),
-              },
-              { label: 'ROL %', value: `${highestScoring.winPctVsLeague.toFixed(0)}%` },
-            ]}
             href={`/team/${highestScoring.team.slug}?season=${season}&week=${selectedWeek}#week-detail`}
           />
         ) : (
@@ -187,9 +175,52 @@ export default function DashboardPage({
           </div>
         )}
 
-        <div className="dash-lead-tiles">
+        {highestScoring && (
+          <HowTheyGotThere
+            title={`How ${highestScoring.team.displayName} got there`}
+            rows={[
+              {
+                label: 'Beat every other roster',
+                value: `${beatenRosters} of ${standings.length - 1}`,
+                detail: `${highestScoring.score.toFixed(1)} would have won ${
+                  beatenRosters === standings.length - 1 ? 'every' : `${beatenRosters} of the`
+                } head-to-head this week.`,
+                tone: beatenRosters === standings.length - 1 ? 'val-good' : undefined,
+              },
+              {
+                label: 'Started their best lineup',
+                value: `${highestScoring.managerScorePct.toFixed(1)}%`,
+                detail: `The perfect lineup was ${highestScoring.optimal.toFixed(1)} — ${(
+                  highestScoring.optimal - highestScoring.score
+                ).toFixed(1)} left on the bench.`,
+                tone: managerClass(highestScoring.managerScorePct),
+              },
+              {
+                label: 'Against the projection',
+                value:
+                  highestScoring.performancePct != null
+                    ? `${highestScoring.performancePct >= 100 ? '+' : '−'}${Math.abs(
+                        highestScoring.performancePct - 100
+                      ).toFixed(1)}%`
+                    : '—',
+                detail:
+                  highestScoring.performancePct != null
+                    ? `Projected for ${(
+                        (highestScoring.score * 100) /
+                        highestScoring.performancePct
+                      ).toFixed(1)}, scored ${highestScoring.score.toFixed(1)}.`
+                    : 'No projection stored for this week.',
+                tone: performanceClass(highestScoring.performancePct),
+              },
+            ]}
+          />
+        )}
+      </div>
+
+      <div className="dash-lead-tiles">
           <LeadTile
-            label="✅ Highest Performance"
+            label="Highest Performance"
+            icon="trend-up"
             sub={
               highestPerf
                 ? `${highestPerf.team.displayName} · ${highestPerf.score.toFixed(1)} pts`
@@ -201,7 +232,8 @@ export default function DashboardPage({
             tone="series"
           />
           <LeadTile
-            label="📋 Best Manager"
+            label="Best Manager"
+            icon="clipboard"
             sub={
               bestManager
                 ? `${bestManager.team.displayName} · ${bestManager.score.toFixed(1)} of ${bestManager.optimal.toFixed(1)}`
@@ -211,7 +243,8 @@ export default function DashboardPage({
             tone="good"
           />
           <LeadTile
-            label={`🏈 Week ${selectedWeek} MVP`}
+            label={`Week ${selectedWeek} MVP`}
+            icon="football"
             sub={
               pow.mvp
                 ? `${pow.mvp.player.name} (${pow.mvp.player.position}) · ${pow.mvp.manager}`
@@ -220,7 +253,6 @@ export default function DashboardPage({
             value={pow.mvp ? pow.mvp.points.toFixed(1) : '—'}
             tone="ink"
           />
-        </div>
       </div>
 
       {recap && (

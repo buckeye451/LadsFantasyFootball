@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getBracket, podium, resolveActiveLeague } from '@/lib/stats';
 import { BracketView } from '@/components/BracketView';
 import type { TeamInfo } from '@/lib/types';
+import { Icon, type IconName } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,7 +14,7 @@ function FinishTile({
   season,
   loser,
 }: {
-  medal: string;
+  medal: IconName;
   label: string;
   team: TeamInfo | null;
   season: string;
@@ -21,8 +22,8 @@ function FinishTile({
 }) {
   return (
     <div className={`finish-tile${loser ? ' loser' : ''}`}>
-      <div className="finish-medal" aria-hidden="true">
-        {medal}
+      <div className="finish-medal">
+        <Icon name={medal} size={28} />
       </div>
       <div className="finish-label">{label}</div>
       <div className="finish-name">
@@ -60,11 +61,11 @@ export default function PlayoffsPage({ searchParams }: { searchParams: { season?
             How the {league.season} postseason finished — plus the consolation bracket winner.
           </p>
           <div className="finish-grid">
-            <FinishTile medal="🏆" label="Champion" team={places.champion} season={league.season} />
-            <FinishTile medal="🥈" label="Runner-up" team={places.runnerUp} season={league.season} />
-            <FinishTile medal="🥉" label="Third place" team={places.third} season={league.season} />
+            <FinishTile medal="trophy" label="Champion" team={places.champion} season={league.season} />
+            <FinishTile medal="medal" label="Runner-up" team={places.runnerUp} season={league.season} />
+            <FinishTile medal="medal" label="Third place" team={places.third} season={league.season} />
             <FinishTile
-              medal="💩"
+              medal="spoon"
               label="Ultimate loser"
               team={places.ultimateLoser}
               season={league.season}

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { daysOld, isRecapFresh } from '@/lib/recency';
+import { Icon } from '@/components/Icon';
 
 export interface BellRecap {
   id: number;
@@ -68,7 +69,7 @@ export function RecapBell({ recap }: { recap: BellRecap | null }) {
         aria-label={fresh ? 'Notifications — a new recap was posted' : 'Notifications'}
         title="Recap notifications"
       >
-        <span aria-hidden="true">🔔</span>
+        <Icon name="bell" size={18} />
         {fresh && <span className="bell-dot" aria-hidden="true" />}
       </button>
 

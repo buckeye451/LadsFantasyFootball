@@ -1,6 +1,7 @@
 import type { TeamWeekDetail } from '@/lib/stats';
 import type { PlayerMeta } from '@/lib/types';
 import { NflTeam } from '@/components/NflTeam';
+import { Icon } from '@/components/Icon';
 
 function PlayerCell({ meta, playerId }: { meta: Map<string, PlayerMeta>; playerId: string | null }) {
   if (!playerId) return <span className="sub">— empty —</span>;
@@ -97,7 +98,7 @@ export function OptimalLineup({ detail, meta }: { detail: TeamWeekDetail; meta: 
               <td className="bench-flag">
                 {s.wasBenched && (
                   <span className="benched-tag" title="Left on the bench" aria-label="Left on the bench">
-                    ⚠
+                    <Icon name="warning" size={14} />
                   </span>
                 )}
               </td>
