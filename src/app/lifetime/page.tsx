@@ -16,6 +16,7 @@ import { DraftRankingsTable } from '@/components/DraftRankingsTable';
 import { NflTeam } from '@/components/NflTeam';
 import Link from 'next/link';
 import { RankTiles, type RankTile } from '@/components/RankTiles';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,7 +37,8 @@ export default function LifetimePage({ searchParams }: { searchParams: { season?
   const tradeTiles: RankTile[] = [
     {
       key: 'most-trades',
-      label: '🔁 Trade Happy',
+      label: 'Trade Happy',
+      icon: 'swap' as const,
       headline: trades.mostTrades?.team.displayName ?? '—',
       lines: trades.mostTrades
         ? [`${trades.mostTrades.trades} trade${trades.mostTrades.trades === 1 ? '' : 's'}`]
@@ -52,7 +54,8 @@ export default function LifetimePage({ searchParams }: { searchParams: { season?
     },
     {
       key: 'best-trader',
-      label: '📈 Best Trader',
+      label: 'Best Trader',
+      icon: 'trend-up' as const,
       headline: trades.bestTrader?.team.displayName ?? '—',
       lines: trades.bestTrader ? [`${gain(trades.bestTrader.pointsGained)} points gained`] : [],
       note: 'Points per week gained across every trade',
@@ -85,12 +88,16 @@ export default function LifetimePage({ searchParams }: { searchParams: { season?
       </p>
 
       <section className="card trophy-case" id="trophy-case">
-        <h2 className="card-title">🏆 Trophy case</h2>
+        <h2 className="card-title">Trophy case</h2>
         <p className="card-note">League champions, one trophy per title.</p>
         <div className="trophy-grid">
           {CHAMPIONS.map((c) => (
             <div className="trophy-tile" key={c.name}>
-              <div className="trophy-emojis">{'🏆'.repeat(c.trophies)}</div>
+              <div className="trophy-emojis" aria-label={`${c.trophies} title${c.trophies === 1 ? '' : 's'}`}>
+                {Array.from({ length: c.trophies }, (_, i) => (
+                  <Icon key={i} name="trophy" size={22} />
+                ))}
+              </div>
               <div className="trophy-name">{c.name}</div>
               <div className="trophy-years">{c.seasons.join(' · ')}</div>
             </div>

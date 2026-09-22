@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { SeedBoard, SeedRow } from '@/lib/stats';
+import { Icon } from '@/components/Icon';
 
 /**
  * Compact standings as a seed board rather than a narrow table: two ranked
@@ -90,8 +91,7 @@ function SeedCard({
           {s.team.displayName}
           {isChamp && (
             <span className="seed-trophy" title="Season champion">
-              {' '}
-              🏆
+              <Icon name="trophy" size={14} />
             </span>
           )}
         </span>

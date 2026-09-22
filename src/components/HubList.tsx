@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { Icon, type IconName } from '@/components/Icon';
 
 export interface HubRow {
   href: string;
-  icon: string;
+  icon: IconName;
   title: string;
   sub: string;
   /** Small right-aligned tag, e.g. "wk 15" or "1 new". */
@@ -18,8 +19,8 @@ export function HubList({ rows }: { rows: HubRow[] }) {
     <div className="hub-list">
       {rows.map((r) => (
         <Link key={r.href + r.title} className="hub-row" href={r.href}>
-          <span className="hub-row-icon" aria-hidden="true">
-            {r.icon}
+          <span className="hub-row-icon">
+            <Icon name={r.icon} size={20} />
           </span>
           <span className="hub-row-body">
             <span className="hub-row-title">{r.title}</span>

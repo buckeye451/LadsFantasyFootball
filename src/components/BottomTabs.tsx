@@ -3,30 +3,31 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { Icon, type IconName } from '@/components/Icon';
 
 const LAST_TEAM_KEY = 'lads-last-team';
 
 interface Tab {
   href: string;
-  icon: string;
+  icon: IconName;
   label: string;
   /** Route prefixes that light this tab up. */
   match: string[];
 }
 
 const TABS: Tab[] = [
-  { href: '/dashboard', icon: '🏈', label: 'Week', match: ['/dashboard', '/week'] },
+  { href: '/dashboard', icon: 'calendar', label: 'Week', match: ['/dashboard', '/week'] },
   {
     href: '/league',
-    icon: '📊',
+    icon: 'chart',
     label: 'League',
     match: ['/league', '/playoffs', '/drafts', '/trades'],
   },
-  { href: '/team', icon: '👤', label: 'My team', match: ['/team'] },
-  { href: '/recaps', icon: '📰', label: 'Recaps', match: ['/recaps'] },
+  { href: '/team', icon: 'user', label: 'My team', match: ['/team'] },
+  { href: '/recaps', icon: 'newspaper', label: 'Recaps', match: ['/recaps'] },
   {
     href: '/history',
-    icon: '🏆',
+    icon: 'trophy',
     label: 'History',
     match: ['/history', '/lifetime', '/records', '/rankings'],
   },
@@ -60,9 +61,6 @@ export function BottomTabs() {
     }
   }, [pathname]);
 
-  // The splash has no chrome of its own; the bar would sit on top of it.
-  if (pathname === '/') return null;
-
   const active = TABS.reduce<Tab | null>((found, tab) => {
     if (found) return found;
     return tab.match.some((m) => pathname === m || pathname.startsWith(`${m}/`)) ? tab : null;
@@ -83,8 +81,8 @@ export function BottomTabs() {
             href={href}
             aria-current={isActive ? 'page' : undefined}
           >
-            <span className="bottom-tab-icon" aria-hidden="true">
-              {tab.icon}
+            <span className="bottom-tab-icon">
+              <Icon name={tab.icon} size={21} />
             </span>
             <span>{tab.label}</span>
           </Link>

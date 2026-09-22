@@ -71,11 +71,28 @@ export function SegTabs<T extends string>({
 }
 
 /**
- * The Compact/Full pair used by the three wide tables, with the stored choice
- * wired in. Returns the current mode and the control to render.
+ * The Compact/Full pair used by the wide tables, with the stored choice wired
+ * in. Returns the current mode and the control to render.
+ *
+ * The first render is always Compact so the server and the client agree, then
+ * a desktop-width reader is moved to Full on mount: there is room for every
+ * column there, and a table that hides nine of thirteen by default is a table
+ * most people never see the rest of. A phone stays Compact, and a stored
+ * choice — restored by SegTabs itself — always wins over both.
  */
 export function useCompactFull(storageKey: string, fullLabel: string) {
   const [mode, setMode] = useState<'compact' | 'full'>('compact');
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(`lads-seg-${storageKey}`)) return;
+    } catch {
+      // storage disabled — fall through to the width check
+    }
+    if (window.matchMedia('(min-width: 960px)').matches) setMode('full');
+    // Mount only: after this the reader's own clicks own the value.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const control = (
     <SegTabs
       options={[

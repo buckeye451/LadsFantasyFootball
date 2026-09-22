@@ -7,6 +7,7 @@ import type { Recap } from '@/lib/recaps';
 import { RecapToolbar } from '@/components/RecapToolbar';
 import { RichText } from '@/components/RichText';
 import { mentionSlotOf, mentionSlots } from '@/lib/richtext';
+import { Icon } from '@/components/Icon';
 
 type Stage = 'closed' | 'pin' | 'editing' | 'confirmDelete';
 type Tab = 'write' | 'preview';
@@ -237,7 +238,14 @@ export function RecapEditor({
         className={isEdit ? 'post-action' : 'post-button'}
         onClick={() => setStage('pin')}
       >
-        {isEdit ? 'Edit' : '✍️ Make a post'}
+        {isEdit ? (
+        'Edit'
+      ) : (
+        <>
+          <Icon name="pencil" size={16} />
+          Make a post
+        </>
+      )}
       </button>
 
       {stage !== 'closed' && (
@@ -403,7 +411,7 @@ export function RecapEditor({
                             aria-label="Remove image"
                             onClick={() => setKeep((k) => k.filter((n) => n !== name))}
                           >
-                            ✕
+                            <Icon name="close" size={16} />
                           </button>
                         </div>
                       ))}

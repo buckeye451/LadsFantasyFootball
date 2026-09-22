@@ -6,7 +6,7 @@ import { LeadStory } from '@/components/LeadStory';
 export const dynamic = 'force-dynamic';
 
 /**
- * Phone hub behind the 🏆 tab: everything that reaches back past this season.
+ * Phone hub behind the History tab: everything that reaches back past this season.
  * Season switching still lives in the header, so these pages can be read for
  * a past year exactly as they can today.
  */
@@ -38,25 +38,25 @@ export default function HistoryPage({ searchParams }: { searchParams: { season?:
   const rows: HubRow[] = [
     {
       href: `/lifetime${q}`,
-      icon: '📈',
+      icon: 'trend-up',
       title: 'Lifetime stats',
       sub: 'Career standings · head to head · trades · drafts',
     },
     {
       href: `/rankings${q}`,
-      icon: '🥇',
+      icon: 'medal',
       title: 'Best player rankings',
       sub: 'Top 50 at each position, any season',
     },
     {
       href: '/records',
-      icon: '📖',
+      icon: 'book',
       title: 'The record book',
       sub: 'Team, player, streak and futility records',
     },
     {
       href: `/lifetime${q}#trophy-case`,
-      icon: '🏆',
+      icon: 'trophy',
       title: 'Trophy case',
       sub: trophySub || 'Every champion',
     },

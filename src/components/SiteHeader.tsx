@@ -110,6 +110,26 @@ export function SiteHeader({
   const seasonHref = (season: string) =>
     SEASON_STABLE.includes(pathname) ? `${pathname}?season=${season}` : `/dashboard?season=${season}`;
 
+  /**
+   * Desktop top-level nav. The hamburger and the badge stay where they are —
+   * the drawer is still the only way into the long lists (every week, every
+   * manager) — this just saves a desktop reader a drawer trip for the five
+   * places they actually go. Hidden on phones, where the bottom tabs do it.
+   */
+  const firstTeam = active?.teams?.[0]?.slug;
+  const navItems: Array<{ href: string; label: string; match: string[] }> = [
+    { href: withSeason('/dashboard'), label: 'This week', match: ['/dashboard', '/week'] },
+    {
+      href: firstTeam ? withSeason(`/team/${firstTeam}`) : withSeason('/league'),
+      label: 'Managers',
+      match: ['/team'],
+    },
+    { href: withSeason('/drafts'), label: 'Draft & trades', match: ['/drafts', '/trades'] },
+    { href: withSeason('/lifetime'), label: 'History', match: ['/lifetime', '/records', '/rankings', '/history'] },
+    { href: withSeason('/recaps'), label: 'Recaps', match: ['/recaps'] },
+  ];
+  const isCurrent = (m: string[]) => m.some((x) => pathname === x || pathname.startsWith(`${x}/`));
+
   // Close the drawer whenever the route changes.
   useEffect(() => {
     setOpen(false);
@@ -144,6 +164,19 @@ export function SiteHeader({
           >
             <img src="/hero/logo.svg" alt={active?.name ?? LEAGUE_SHORT_NAME} className="brand-logo" />
           </Link>
+
+          <nav className="header-nav" aria-label="Sections">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`header-nav-link${isCurrent(item.match) ? ' active' : ''}`}
+                aria-current={isCurrent(item.match) ? 'page' : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
           <RecapBell recap={newestRecap} />
           <ThemeToggle />
           {seasons.length > 0 && (

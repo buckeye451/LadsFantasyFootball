@@ -1,6 +1,7 @@
 import { resolveActiveLeague, seasonTrades, tradeSummary } from '@/lib/stats';
 import { TradesList } from '@/components/TradesList';
 import { notFound } from 'next/navigation';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +25,10 @@ export default function TradesPage({ searchParams }: { searchParams: { season?: 
         <div className="feature-tiles">
           {mostTrades && (
             <div className="feature-tile">
-              <div className="feature-tile-label">🔁 Trade Happy</div>
+              <div className="feature-tile-label">
+            <Icon name="swap" size={16} />
+            Trade Happy
+          </div>
               <div className="feature-tile-name">{mostTrades.team.displayName}</div>
               <div className="feature-tile-value">
                 {mostTrades.trades} trade{mostTrades.trades === 1 ? '' : 's'}
@@ -33,7 +37,10 @@ export default function TradesPage({ searchParams }: { searchParams: { season?: 
           )}
           {bestTrader && (
             <div className="feature-tile">
-              <div className="feature-tile-label">📈 Best Trader</div>
+              <div className="feature-tile-label">
+            <Icon name="trend-up" size={16} />
+            Best Trader
+          </div>
               <div className="feature-tile-name">{bestTrader.team.displayName}</div>
               <div className="feature-tile-value">
                 {bestTrader.pointsGained > 0 ? '+' : ''}

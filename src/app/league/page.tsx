@@ -11,7 +11,7 @@ import { HubList, type HubRow } from '@/components/HubList';
 export const dynamic = 'force-dynamic';
 
 /**
- * Phone hub behind the 📊 tab. Everything in the drawer that describes the
+ * Phone hub behind the League tab. Everything in the drawer that describes the
  * league as a whole gets a home here, so the bottom bar doesn't strand any
  * destination.
  */
@@ -41,7 +41,7 @@ export default function LeaguePage({ searchParams }: { searchParams: { season?: 
   const rows: HubRow[] = [
     {
       href: `/dashboard${q}`,
-      icon: '📋',
+      icon: 'clipboard',
       title: 'Standings',
       sub: leader
         ? `All 13 columns · ${leader.team.displayName} leads at ${leader.wins}-${leader.losses}`
@@ -49,7 +49,7 @@ export default function LeaguePage({ searchParams }: { searchParams: { season?: 
     },
     {
       href: weeks.length ? `/week/${weeks[weeks.length - 1]}${q}` : `/dashboard${q}`,
-      icon: '🗓',
+      icon: 'calendar',
       title: 'Weekly scores',
       sub: weeks.length
         ? `Week ${weeks[0]} – ${weeks[weeks.length - 1]} · every matchup + box score`
@@ -57,20 +57,20 @@ export default function LeaguePage({ searchParams }: { searchParams: { season?: 
     },
     {
       href: `/playoffs${q}`,
-      icon: '🏟',
+      icon: 'bracket',
       title: 'Playoffs',
       sub: 'Bracket + per-round breakdowns',
       badge: nextRound?.week != null ? `wk ${nextRound.week}` : undefined,
     },
     {
       href: `/drafts${q}`,
-      icon: '📝',
+      icon: 'draft',
       title: 'Drafts',
       sub: 'Draft board + draft scores, every season',
     },
     {
       href: `/trades${q}`,
-      icon: '🔁',
+      icon: 'swap',
       title: 'Trades',
       sub: trades.length
         ? `${trades.length} completed ${trades.length === 1 ? 'trade' : 'trades'} · points gained`
@@ -78,7 +78,7 @@ export default function LeaguePage({ searchParams }: { searchParams: { season?: 
     },
     {
       href: `/team/${teams[0]?.slug ?? ''}${q}`,
-      icon: '👥',
+      icon: 'users',
       title: 'Managers',
       sub: `All ${teams.length} teams · lineups + optimal`,
     },

@@ -16,9 +16,14 @@ into a local SQLite database automatically, and the site serves:
   List one Sleeper league id per season in `SLEEPER_LEAGUE_ID`; the app also
   follows each league's previous-season chain, so a new season appears
   automatically once it starts.
-- **A hamburger menu** grouping navigation into **Players** (each manager's
-  team), **Weekly Scores** (a per-week breakdown of every matchup), and
-  **Playoffs** (bracket + per-round breakdowns).
+- **A front door** at `/` — the league badge and the player art as a banner
+  over this week's finals, the playoff cut line and the newest recap. No
+  interstitial: the scores are on the first screen.
+- **Navigation** — a top-level bar on desktop (This week, Managers, Draft &
+  trades, History, Recaps), bottom tabs on a phone, and the hamburger drawer
+  on both for the long lists: **Players** (each manager's team), **Weekly
+  Scores** (a per-week breakdown of every matchup), and **Playoffs** (bracket
+  + per-round breakdowns).
 - **Weekly / playoff matchup breakdowns** — each matchup shows, per team:
   *Win % vs League* (share of the other teams that score would beat),
   *Performance %* (score ÷ projected points), *Manager Score* (score ÷
@@ -44,11 +49,11 @@ real logo.
 
 Uploading from the browser: open `public/hero/` on this branch → **Add file →
 Upload files** → drag the image in → **Commit changes**. That push redeploys on
-its own. The CSS sizes the logo by width on the splash page and by height in the
+its own. The CSS sizes the logo by width on the home page and by height in the
 header, so a wide wordmark and a square badge both work without CSS changes.
 
 If your file is a PNG rather than an SVG, upload it as `logo.png` and say so —
-two references in `SiteHeader.tsx` and `page.tsx` need the new extension.
+two references in `SiteHeader.tsx` and `app/page.tsx` need the new extension.
 
 Keep in mind for later: **add the 2026 champion** to `SEASON_CHAMPIONS` in
 `src/lib/stats.ts` once that season finishes, or the trophy case will still show
@@ -109,6 +114,7 @@ rather than skipping what's already stored.
 
 ```
 src/lib/branding.ts  league name/logo constants (the one place to rebrand)
+src/components/Icon.tsx  the one stroke icon set (no emoji in the UI)
 src/lib/db.ts        SQLite schema + connection (node:sqlite, WAL mode)
 src/lib/sleeper.ts   Sleeper REST client
 src/lib/sync.ts      ingestion (idempotent upserts, player-dump caching)
@@ -116,7 +122,8 @@ src/lib/autosync.ts  optional in-process sync scheduler
 src/lib/optimal.ts   optimal-lineup solver (fills most-restrictive slots first)
 src/lib/stats.ts     standings, rank history, player aggregates, team seasons
 src/lib/managers.ts  Sleeper handle → real name
-src/app/             Next.js pages: dashboard, /team/[slug], /api/sync
+src/app/             Next.js pages: front door, dashboard, /team/[slug], /api/sync
+src/app/globals.css  design tokens (one palette, two themes) + every rule
 src/components/      tables, charts (Recharts), roster/optimal lineup views
 scripts/             CLI sync
 data/                SQLite database + player cache (gitignored)
